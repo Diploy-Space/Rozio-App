@@ -1,74 +1,31 @@
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rozio_app/features/chose_language/presentation/chose_language_screen.dart';
 import 'package:rozio_app/features/onboarding_screen.dart';
 import 'package:rozio_app/features/splash_screen.dart';
-
+import 'package:rozio_app/helpers/navigation_service.dart';
 
 class AppRoutes {
-  static int duration = 300;
+  AppRoutes._();
 
-
-
-  static final appRoutes = [
-    defaultTransitionPage(
-      name: SplashScreen.routeName,
-      page: () => const SplashScreen(),
-    ),
-    defaultTransitionPage(
-      name: OnboardingScreen.routeName,
-      page: () => const OnboardingScreen(),
-    ),
-    
-
-    // dynamicArgumentPage(
-    //   name: RoomTaskScreen.routeName,
-    //   pageBuilder: (args) => RoomTaskScreen(roomId: args),
-    // ),
-    // // defaultTransitionPage(name: RoomTaskScreen.routeName, page: () =>  RoomTaskScreen()),
-    // defaultTransitionPage(name: WattSaveScreen.routeName, page: () => WattSaveScreen()),
-    // defaultTransitionPage(name: DashboardScreen.routeName, page: () => DashboardScreen()),
-    // defaultTransitionPage(name: TheVaultScreen.routeName, page: () => TheVaultScreen()),
-    // defaultTransitionPage(name: EquityInsightScreen.routeName, page: () => EquityInsightScreen()),
-    // defaultTransitionPage(name: HomeScopeScreen.routeName, page: () => HomeScopeScreen()),
-
-    // dynamicArgumentPage(
-    //   name: HomeScopeProjectDetails.routeName,
-    //   pageBuilder: (args) => HomeScopeProjectDetails(projectId: args),
-    // ),
-
-    // // read more screen
-    // dynamicArgumentPage(
-    //   name: ReadMoreScreen.routeName,
-    //   pageBuilder: (args) => ReadMoreScreen(
-    //     article: args["article"],
-    //     index: args["index"],
-    //   ),
-    // ),
-  ];
-}
-
-//
-GetPage defaultTransitionPage({
-  required String name,
-  required GetPageBuilder page,
-}) {
-  return GetPage(
-    name: name,
-    page: page,
-    transition: Transition.noTransition,
-    transitionDuration: Duration(milliseconds: AppRoutes.duration),
-  );
-}
-
-// for argument pass route
-GetPage dynamicArgumentPage({
-  required String name,
-  required Widget Function(dynamic args) pageBuilder,
-}) {
-  return GetPage(
-    name: name,
-    page: () => pageBuilder(Get.arguments),
-    transition: Transition.noTransition,
-    transitionDuration: Duration(milliseconds: AppRoutes.duration),
+  static final GoRouter router = GoRouter(
+    navigatorKey: NavigationService.navigatorKey,
+    initialLocation: SplashScreen.routeName,
+    routes: [
+      GoRoute(
+        path: SplashScreen.routeName,
+        name: SplashScreen.routeName,
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: OnboardingScreen.routeName,
+        name: OnboardingScreen.routeName,
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+      GoRoute(
+        path: ChoseLanguageScreen.routeName,
+        name: ChoseLanguageScreen.routeName,
+        builder: (context, state) => const ChoseLanguageScreen(),
+      ),
+    ],
   );
 }

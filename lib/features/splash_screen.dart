@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rozio_app/constants/app_assets/assets_image.dart';
 import 'package:rozio_app/constants/app_colors.dart';
 import 'package:rozio_app/features/onboarding_screen.dart';
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     Timer(const Duration(milliseconds: 2400), () {
       if (!mounted) return;
-      Get.offAllNamed(OnboardingScreen.routeName);
+      context.go(OnboardingScreen.routeName);
     });
   }
 
