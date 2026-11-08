@@ -1,47 +1,43 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:rozio_app/constants/app_assets/assets_image.dart';
 import 'package:rozio_app/constants/app_colors.dart';
-import 'package:rozio_app/constants/text_fonts_style.dart';
-import 'package:rozio_app/helpers/ui_helpers.dart';
+import 'package:rozio_app/features/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = '/splash';
+
   const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  final PageController _pageController = PageController();
-  int _currentIndex = 0;
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _progressController;
 
-  final List<Map<String, dynamic>> splash = [
-    {
-      'imagePath': AssetsImages.splashScreenImage1,
-      'title': 'Online shopping',
-      'description':
-          'Browse thousands of products from your favorite categories and shop anytime, anywhere with just a few taps.',
-    },
-    {
-      'imagePath': AssetsImages.splashScreenImage2,
-      'title': 'Wholesaler',
-      'description':
-          'Buy in bulk directly from trusted wholesalers and get the best prices for your business or your home.',
-    },
-    {
-      'imagePath': AssetsImages.splashScreenImage3,
-      'title': '30 minutes delivery',
-      'description':
-          'Order now and get your products at your doorstep within 30 minutes, fast and fresh.',
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _progressController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2200),
+    )..forward();
+
+    Timer(const Duration(milliseconds: 2400), () {
+      if (!mounted) return;
+      Get.offAllNamed(OnboardingScreen.routeName);
+    });
+  }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _progressController.dispose();
     super.dispose();
   }
 
@@ -51,154 +47,99 @@ class _SplashScreenState extends State<SplashScreen> {
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
       child: Scaffold(
         backgroundColor: AppColors.c011447,
-        body: Container(
-          width: 1.sw,
-          height: 1.sh,
-          color: AppColors.c011447,
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: UIHelper.kDefaulutPadding(),
+        body: SizedBox.expand(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ColoredBox(color: AppColors.c011447),
+              Image.asset(
+                AssetsImages.splashBg,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
               ),
-              child: Column(
-                children: [
-                  UIHelper.verticalSpace(8.h),
-                  _buildHeader(),
-                  Expanded(
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: splash.length,
-                      onPageChanged: (index) {
-                        setState(() => _currentIndex = index);
-                      },
-                      itemBuilder: (context, index) {
-                        return _buildSplashPage(splash[index]);
-                      },
-                    ),
-                  ),
-                  _buildPageIndicator(),
-                  UIHelper.verticalSpace(24.h),
-                ],
+              SafeArea(
+                child: Column(
+                  children: [
+                    const Spacer(flex: 5),
+                    _buildBrand(),
+                    const Spacer(flex: 5),
+                    _buildProgressBar(),
+                    SizedBox(height: 24.h),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildBrand() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        GestureDetector(
-          onTap: () {
-            if (_currentIndex > 0) {
-              _pageController.previousPage(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            }
-          },
-          child: Container(
-            width: 52.w,
-            height: 40.h,
-            decoration: BoxDecoration(
-              color: AppColors.c0A0B0E,
-              borderRadius: BorderRadius.circular(13.r),
-            ),
-            child: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: AppColors.cFFFFFF,
-              size: 20.sp,
+        Container(
+          width: 92.w,
+          height: 92.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColors.cFFFFFF,
+            borderRadius: BorderRadius.circular(24.r),
+          ),
+          child: Text(
+            'R',
+            style: TextStyle(
+              fontFamily: 'Geist',
+              color: AppColors.c011447,
+              fontSize: 52.sp,
+              fontWeight: FontWeight.w800,
+              height: 1,
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            // TODO: navigate to next screen
-          },
-          child: Container(
-            width: 65.w,
-            height: 34.h,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: AppColors.c0A0B0E,
-              borderRadius: BorderRadius.circular(11.r),
-            ),
-            child: Text(
-              'Skip',
-              style: TextFontStyle.textStylec28cGeist600cFFFFFF.copyWith(
-                color: AppColors.cFFFFFF,
-                fontWeight: FontWeight.w500,
-                fontSize: 13.sp,
+        SizedBox(height: 16.h),
+        Text(
+          'Rozio',
+          style: TextStyle(
+            fontFamily: 'Geist',
+            color: AppColors.cFFFFFF,
+            fontSize: 34.sp,
+            fontWeight: FontWeight.w700,
+            height: 1.1,
+            letterSpacing: -0.3,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProgressBar() {
+    return AnimatedBuilder(
+      animation: _progressController,
+      builder: (context, child) {
+        return SizedBox(
+          width: 68.w,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(100.r),
+            child: LinearProgressIndicator(
+              value: _progressController.value,
+              minHeight: 3.h,
+              backgroundColor: AppColors.cFFFFFF.withValues(alpha: 0.2),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                AppColors.cFFFFFF,
               ),
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSplashPage(Map<String, dynamic> item) {
-    return Column(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.h),
-            child: Image.asset(
-              item['imagePath'],
-              fit: BoxFit.contain,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
-        ),
-        Text(
-          item['title'],
-          textAlign: TextAlign.center,
-          style: TextFontStyle.textStylec28cGeist600cFFFFFF.copyWith(
-            fontSize: 28.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        UIHelper.verticalSpace(12.h),
-        Text(
-          item['description'],
-          textAlign: TextAlign.center,
-          style: TextFontStyle.textStylec28cGeist600cFFFFFF.copyWith(
-            fontSize: 15.sp,
-            fontWeight: FontWeight.w400,
-            color: AppColors.cD5D5D5,
-            height: 1.4,
-          ),
-        ),
-        UIHelper.verticalSpace(28.h),
-      ],
-    );
-  }
-
-  Widget _buildPageIndicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(splash.length, (index) {
-        final isActive = index == _currentIndex;
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          margin: EdgeInsets.symmetric(horizontal: 4.w),
-          height: 8.h,
-          width: isActive ? 24.w : 8.w,
-          decoration: BoxDecoration(
-            color: AppColors.cFFFFFF,
-            borderRadius: BorderRadius.circular(8.r),
-          ),
         );
-      }),
+      },
     );
   }
 }

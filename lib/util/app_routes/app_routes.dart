@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:rozio_app/features/onboarding_screen.dart';
 import 'package:rozio_app/features/splash_screen.dart';
 
 
@@ -11,7 +12,11 @@ class AppRoutes {
   static final appRoutes = [
     defaultTransitionPage(
       name: SplashScreen.routeName,
-      page: () => SplashScreen(),
+      page: () => const SplashScreen(),
+    ),
+    defaultTransitionPage(
+      name: OnboardingScreen.routeName,
+      page: () => const OnboardingScreen(),
     ),
     
 
