@@ -1,0 +1,7 @@
+import 'package:sixvalley_vendor_app/features/wholesale/order_edit/domain/repositories/wholesale_order_edit_repository_interface.dart';
+import 'package:sixvalley_vendor_app/features/wholesale/order_edit/domain/services/wholesale_order_edit_service_interface.dart';
+
+class WholesaleOrderEditService implements WholesaleOrderEditServiceInterface {
+  final WholesaleOrderEditRepositoryInterface wholesaleOrderEditRepositoryInterface;
+  WholesaleOrderEditService({required this.wholesaleOrderEditRepositoryInterface});
+}

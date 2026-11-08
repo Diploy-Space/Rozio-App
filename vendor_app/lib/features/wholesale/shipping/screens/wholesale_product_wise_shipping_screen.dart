@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:sixvalley_vendor_app/localization/language_constrants.dart';
+import 'package:sixvalley_vendor_app/utill/dimensions.dart';
+import 'package:sixvalley_vendor_app/utill/images.dart';
+import 'package:sixvalley_vendor_app/utill/styles.dart';
+
+class WholesaleProductWiseShippingScreen extends StatelessWidget {
+  const WholesaleProductWiseShippingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,children: [
+          Expanded( child: Column( children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top : MediaQuery.of(context).size.height/5),
+                  child: SizedBox(width: MediaQuery.of(context).size.width/3,
+                    child: Image.asset(Images.productWiseShipping)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(Dimensions.paddingSizeButton),
+                  child: Text(getTranslated('product_wise_delivery_note', context)!,style: robotoRegular.copyWith(
+                    color: Theme.of(context).textTheme.bodyLarge?.color
+                  ),textAlign: TextAlign.center),
+                )
+              ],
+            ),
+          ),
+          const SizedBox()
+
+        ],);
+  }
+}
