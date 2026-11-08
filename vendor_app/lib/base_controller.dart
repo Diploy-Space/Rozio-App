@@ -29,7 +29,9 @@ abstract class BaseController<T extends ChangeNotifier> extends ChangeNotifier {
   Future<R> runAsync<R>(Future<R> Function() action) async {
     _isLoading = true;
     _error = null;
-    notif
+    notifyListeners();
+
+    try {
       final result = await action();
       return result;
     } catch (e) {

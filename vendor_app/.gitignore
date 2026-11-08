@@ -56,3 +56,6 @@ get_changed_files.sh
 
 # Docs
 /docs
+
+*.apk
+
