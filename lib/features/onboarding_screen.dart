@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rozio_app/constants/app_assets/assets_image.dart';
 import 'package:rozio_app/constants/app_colors.dart';
 import 'package:rozio_app/constants/text_fonts_style.dart';
+import 'package:rozio_app/features/chose_language/presentation/chose_language_screen.dart';
 import 'package:rozio_app/helpers/ui_helpers.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -45,6 +47,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.dispose();
   }
 
+  void _goToChoseLanguage() {
+    context.go(ChoseLanguageScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -70,15 +76,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   UIHelper.verticalSpace(8.h),
                   _buildHeader(),
                   Expanded(
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: splash.length,
-                      onPageChanged: (index) {
-                        setState(() => _currentIndex = index);
+                    child: NotificationListener<OverscrollNotification>(
+                      onNotification: (notification) {
+                        if (_currentIndex == splash.length - 1 &&
+                            notification.overscroll > 0) {
+                          _goToChoseLanguage();
+                        }
+                        return false;
                       },
-                      itemBuilder: (context, index) {
-                        return _buildSplashPage(splash[index]);
-                      },
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: splash.length,
+                        onPageChanged: (index) {
+                          setState(() => _currentIndex = index);
+                        },
+                        itemBuilder: (context, index) {
+                          final isLast = index == splash.length - 1;
+                          return GestureDetector(
+                            onTap: isLast ? _goToChoseLanguage : null,
+                            behavior: HitTestBehavior.opaque,
+                            child: _buildSplashPage(splash[index]),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   _buildPageIndicator(),
@@ -120,9 +140,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            // TODO: navigate to next screen
-          },
+          onTap: _goToChoseLanguage,
           child: Container(
             width: 65.w,
             height: 34.h,
