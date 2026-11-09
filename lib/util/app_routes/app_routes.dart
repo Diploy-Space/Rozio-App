@@ -1,5 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:rozio_app/features/auth/presentation/login_screen.dart';
+import 'package:rozio_app/features/auth/presentation/verify_otp_screen.dart';
+import 'package:rozio_app/features/auth/presentation/recover_account_screen.dart';
+import 'package:rozio_app/features/auth/presentation/recover_email_code_screen.dart';
+import 'package:rozio_app/features/auth/presentation/recover_new_number_screen.dart';
 import 'package:rozio_app/features/chose_language/presentation/chose_language_screen.dart';
 import 'package:rozio_app/features/location/presentation/location_found_screen.dart';
 import 'package:rozio_app/features/location/presentation/location_screen.dart';
@@ -57,6 +61,32 @@ class AppRoutes {
             variant: isFromBag ? LoginVariant.fromAddToBag : LoginVariant.standard,
           );
         },
+      ),
+      GoRoute(
+        path: VerifyOtpScreen.routeName,
+        name: VerifyOtpScreen.routeName,
+        builder: (context, state) {
+          final phone = state.extra is String ? state.extra as String : '+91 98765 43210';
+          return VerifyOtpScreen(phoneNumber: phone);
+        },
+      ),
+      GoRoute(
+        path: RecoverAccountScreen.routeName,
+        name: RecoverAccountScreen.routeName,
+        builder: (context, state) => const RecoverAccountScreen(),
+      ),
+      GoRoute(
+        path: RecoverEmailCodeScreen.routeName,
+        name: RecoverEmailCodeScreen.routeName,
+        builder: (context, state) {
+          final email = state.extra is String ? state.extra as String : 'rahul@gmail.com';
+          return RecoverEmailCodeScreen(email: email);
+        },
+      ),
+      GoRoute(
+        path: RecoverNewNumberScreen.routeName,
+        name: RecoverNewNumberScreen.routeName,
+        builder: (context, state) => const RecoverNewNumberScreen(),
       ),
     ],
   );

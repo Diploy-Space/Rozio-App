@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rozio_app/constants/app_colors.dart';
+import 'package:rozio_app/features/auth/presentation/verify_otp_screen.dart';
 import 'package:rozio_app/features/location/presentation/widgets/location_header_artwork.dart';
 import 'package:rozio_app/helpers/ui_helpers.dart';
 
@@ -190,18 +191,24 @@ class _LoginScreenState extends State<LoginScreen> {
           behavior: SnackBarBehavior.floating,
         ),
       );
+      Future.delayed(const Duration(milliseconds: 600), () {
+        if (mounted) {
+          context.push(
+            VerifyOtpScreen.routeName,
+            extra: '${_selectedCountry.dialCode} ${_phoneController.text}',
+          );
+        }
+      });
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'OTP sent to ${_selectedCountry.dialCode} ${_phoneController.text}',
-          style: TextStyle(fontFamily: 'Geist', fontSize: 13.sp),
-        ),
-        backgroundColor: AppColors.c1847C9,
-        behavior: SnackBarBehavior.floating,
-      ),
+    final phoneStr = _phoneController.text.trim().isNotEmpty
+        ? '${_selectedCountry.dialCode} ${_phoneController.text}'
+        : '+91 98765 43210';
+
+    context.push(
+      VerifyOtpScreen.routeName,
+      extra: phoneStr,
     );
   }
 
