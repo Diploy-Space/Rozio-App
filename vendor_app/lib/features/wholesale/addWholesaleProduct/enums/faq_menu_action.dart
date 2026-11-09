@@ -1,4 +1,0 @@
-enum FaqMenuAction {
-  edit,
-  delete,
-}
