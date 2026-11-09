@@ -1,3 +1,0 @@
-import 'package:sixvalley_vendor_app/features/third_party_deliveryman/domain/repositories/third_party_deliveryman_repository_interface.dart';
-
-abstract class WholesaleThirdPartyDeliverymanRepositoryInterface implements ThirdPartyDeliverymanRepositoryInterface {}
