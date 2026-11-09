@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rozio_app/constants/app_assets/assets_image.dart';
 import 'package:rozio_app/constants/app_colors.dart';
+import 'package:rozio_app/features/location/presentation/location_screen.dart';
 import 'package:rozio_app/helpers/ui_helpers.dart';
 
 class ChoseLanguageScreen extends StatefulWidget {
@@ -227,7 +229,7 @@ class _ChoseLanguageScreenState extends State<ChoseLanguageScreen> {
       height: 52.h,
       child: ElevatedButton(
         onPressed: () {
-          // TODO: persist language and navigate next
+          context.go(LocationScreen.routeName);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.c1847C9,

@@ -6,6 +6,8 @@ class AssetsImages {
   static String splashScreenImage1 = 'assets/images/splash_screen_image1.png';
   static String splashScreenImage2 = 'assets/images/splash_screen_image2.png';
   static String splashScreenImage3 = 'assets/images/splash_screen_image3.png';
+  static String locationRadarHeader = 'assets/images/location_radar_header.png';
+  static String locationPinBoxHeader = 'assets/images/location_pin_box_header.png';
 
 
 
