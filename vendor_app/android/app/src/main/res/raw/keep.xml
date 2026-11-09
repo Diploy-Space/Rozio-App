@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Resources looked up by name at runtime (flutter_local_notifications), which
-     resource shrinking would otherwise strip from release builds. -->
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@drawable/notification_icon,@raw/notification" />
