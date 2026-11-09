@@ -158,52 +158,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           ),
                         ),
 
-                        // Interactive Test Switcher (lets user toggle locked state on tap!)
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _isLocked = !_isLocked;
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 5.h),
-                            decoration: BoxDecoration(
-                              color: _isLocked
-                                  ? const Color(0xFFEF4444).withValues(alpha: 0.25)
-                                  : Colors.white.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(16.r),
-                              border: Border.all(
-                                color: _isLocked
-                                  ? const Color(0xFFEF4444)
-                                  : Colors.white.withValues(alpha: 0.3),
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  _isLocked
-                                      ? Icons.lock_outline_rounded
-                                      : Icons.lock_open_rounded,
-                                  color: Colors.white,
-                                  size: 12.sp,
-                                ),
-                                SizedBox(width: 4.w),
-                                Text(
-                                  _isLocked ? 'State: Locked' : 'State: Normal',
-                                  style: TextStyle(
-                                    fontFamily: 'Geist',
-                                    color: Colors.white,
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
